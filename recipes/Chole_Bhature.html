@@ -1,30 +1,41 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chole Bhature - Odin Recipes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Recipe for Chole Bhature, a classic North Indian dish.">
+  <title>Chole Bhature - Odin Recipes</title>
 </head>
 <body>
-    <!-- Main Title -->
+  <header>
     <h1>Chole Bhature</h1>
+  </header>
 
-    <!-- Image Section -->
-    <!-- Note: Ensure the image path is correct relative to your folder structure -->
-    <img src="C:\Users\meena shah\Desktop\odin_project\repos\odin-recipes\image\chole.jpg" alt="Description of the dish" width="500">
+  <main>
+    <figure>
+      <img
+        id="recipe-image"
+        src="../image/chole.jpg"
+        alt="A plate of Chole Bhature served with pickled onions and green chilies"
+        width="500"
+        loading="lazy"
+      >
+      <figcaption>Chole Bhature served hot</figcaption>
+    </figure>
 
-    <!-- Description Section -->
-    <h2>Description</h2>
-    <p>
-       Chole Bhature is a world-famous culinary masterpiece from the heart of North India. It is a soul-satisfying combination of spicy, tangy chickpeas (Chole) and deep-fried, fluffy leavened bread (Bhature). Usually served with a side of pickled onions, green chilies, and a cooling glass of lassi, it is the ultimate comfort food.
-    </p>
-    <p>
-       The magic lies in the contrast: the soft, pillowy texture of the Bhatura is the perfect vessel for soaking up the rich, dark gravy of the Chole, which is slow-cooked with a special blend of spices including dried pomegranate seeds and amchoor (mango powder).
-    </p>
+    <section>
+      <h2>Description</h2>
+      <p>
+        Chole Bhature is a world-famous culinary masterpiece from the heart of North India. It is a soul-satisfying combination of spicy, tangy chickpeas (Chole) and deep-fried, fluffy leavened bread (Bhature). Usually served with a side of pickled onions, green chilies, and a cooling glass of lassi, it is the ultimate comfort food.
+      </p>
+      <p>
+        The magic lies in the contrast: the soft, pillowy texture of the Bhatura is the perfect vessel for soaking up the rich, dark gravy of the Chole, which is slow-cooked with a special blend of spices including dried pomegranate seeds and amchoor (mango powder).
+      </p>
+    </section>
 
-    <!-- Ingredients Section (Unordered List) -->
-    <h2>Ingredients</h2>
-    <ul>
+    <section>
+      <h2>Ingredients</h2>
+      <ul>
         <li>2 cups chickpeas (kabuli chana), soaked overnight</li>
         <li>2 large onions, finely pureed</li>
         <li>3 tomatoes, pureed</li>
@@ -34,22 +45,67 @@
         <li>Whole spices: Cinnamon stick, bay leaf, and black cardamom</li>
         <li>Powdered spices: Chole masala, turmeric, and red chili powder</li>
         <li>Oil for deep frying</li>
-    </ul>
+      </ul>
+    </section>
 
-    <!-- Steps Section (Ordered List) -->
-    <h2>Steps</h2>
-    <ol>
+    <section>
+      <h2>Steps</h2>
+      <ol>
         <li><strong>Pressure Cook the Chole:</strong> Cook the soaked chickpeas with water, salt, and the tea bags until they are soft and tender. Discard the tea bags once done.</li>
-    <li><strong>Prepare the Masala:</strong> Heat oil in a heavy-bottomed pan. Add the whole spices, then sauté the onion puree and ginger-garlic paste until golden brown.</li>
-    <li><strong>Simmer the Gravy:</strong> Add the tomato puree and powdered spices. Cook until the oil separates from the masala, then stir in the cooked chickpeas. Let it simmer for 15 minutes.</li>
-    <li><strong>Make the Dough:</strong> Mix the flour, yogurt, salt, and baking soda. Knead into a soft dough and let it rest for at least 2 hours.</li>
-    <li><strong>Fry the Bhature:</strong> Roll the dough into oval shapes. Heat oil in a deep kadhai and fry the bhature until they puff up like balloons and turn golden brown.</li>
-    <li><strong>Serve:</strong> Plate the hot chole with a dollop of butter on top and serve immediately with the fresh bhature.</li>
-    </ol>
+        <li><strong>Prepare the Masala:</strong> Heat oil in a heavy-bottomed pan. Add the whole spices, then sauté the onion puree and ginger-garlic paste until golden brown.</li>
+        <li><strong>Simmer the Gravy:</strong> Add the tomato puree and powdered spices. Cook until the oil separates from the masala, then stir in the cooked chickpeas. Let it simmer for 15 minutes.</li>
+        <li><strong>Make the Dough:</strong> Mix the flour, yogurt, salt, and baking soda. Knead into a soft dough and let it rest for at least 2 hours.</li>
+        <li><strong>Fry the Bhature:</strong> Roll the dough into oval shapes. Heat oil in a deep kadhai and fry the bhature until they puff up like balloons and turn golden brown.</li>
+        <li><strong>Serve:</strong> Plate the hot chole with a dollop of butter on top and serve immediately with the fresh bhature.</li>
+      </ol>
+    </section>
+  </main>
 
-    <hr>
-    <!-- Navigation back to home -->
+  <hr>
+  <footer>
     <p><a href="../index.html">Return to Main Page</a></p>
+  </footer>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function initializeRecipePage() {
+      const recipeImage = document.getElementById('recipe-image');
+
+      if (!recipeImage) {
+        console.error('Recipe image element is missing; no image handling applied.');
+        return;
+      }
+
+      function isSafeImageSource(imageSource) {
+        if (typeof imageSource !== 'string') {
+          return false;
+        }
+
+        const unsafeSourcePatterns = [
+          /^\s*[a-zA-Z]:\\/,
+          /^file:\/\//i,
+          /^data:/i
+        ];
+
+        return !unsafeSourcePatterns.some(function matchesUnsafePattern(pattern) {
+          return pattern.test(imageSource);
+        });
+      }
+
+      const imageSource = recipeImage.getAttribute('src') || '';
+
+      if (!isSafeImageSource(imageSource)) {
+        console.error('Unsafe image source detected; removing source to prevent local file access.');
+        recipeImage.removeAttribute('src');
+        recipeImage.alt = 'Recipe image unavailable due to an unsafe source.';
+        return;
+      }
+
+      recipeImage.addEventListener('error', function handleImageLoadError() {
+        this.alt = 'Recipe image failed to load.';
+        this.classList.add('image-error');
+        this.removeEventListener('error', handleImageLoadError);
+      });
+    });
+  </script>
 </body>
 </html>
