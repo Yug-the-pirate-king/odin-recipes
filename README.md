@@ -13,48 +13,55 @@
 
 ## Description
 
-A basic recipe website built as part of The Odin Project's Foundation course. The project intentionally focuses on HTML structure before adding CSS styling, so the pages will not look visually polished yet.
+A basic recipe website built as part of [The Odin Project](https://www.theodinproject.com/) Foundation course. This project intentionally focuses on HTML structure and semantics before adding CSS, so the pages are not visually styled yet.
 
 The site includes:
-- A main index page with links to multiple recipes.
-- Individual recipe pages featuring images, descriptions, ingredients, and numbered preparation steps.
+- A main index page linking to multiple recipes.
+- Individual recipe pages featuring a title, image, description, ingredient list, and numbered preparation steps.
 
 ## Skills Demonstrated
 
 - Structuring documents with **HTML5**.
-- Writing standard HTML **boilerplate** (`<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`, etc.).
+- Writing standard HTML **boilerplate** (`<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`).
 - Creating internal links with **anchor tags** (`<a>`).
 - Displaying images with **image tags** (`<img>`) and descriptive `alt` text.
 - Organizing content with **unordered** (`<ul>`) and **ordered** (`<ol>`) lists.
-- Managing project files and folders in a **Git** repository.
+- Managing project files and folders with **Git**.
 
 ## Project Structure
 
-- `index.html` — landing page with recipe links.
-- `recipes/` — directory containing individual recipe pages.
-- `images/` — directory for recipe images (add as the project grows).
+- `index.html` — Landing page containing links to recipes.
+- `recipes/` — Directory containing individual recipe pages.
+- `images/` — Directory for recipe images (expanded as the project grows).
 
 ## Prerequisites
 
 - A modern web browser.
-- Git, if cloning the repository locally.
+- Git (only if cloning the repository locally).
 
 ## How to View
 
-1. Clone the repository: `git clone https://github.com/Yug-the-pirate-king/odin-recipes.git`
-2. Navigate into the project folder: `cd odin-recipes`
-3. Open `index.html` in your browser. For example:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Yug-the-pirate-king/odin-recipes.git
+   ```
+2. Navigate into the project folder:
+   ```bash
+   cd odin-recipes
+   ```
+3. Open `index.html` in your browser:
    - macOS: `open index.html`
    - Windows PowerShell: `start index.html`
+   - Linux: `xdg-open index.html`
    - Or double-click the file in your file manager.
 
 ## Error Handling & Validation
 
-To keep the project robust and easy to maintain:
+To keep the project robust and maintainable:
 - Validate all HTML files with the [W3C Markup Validation Service](https://validator.w3.org/) before committing.
-- Confirm that every `<img>` tag has a valid `src` path and a meaningful `alt` attribute.
-- Check that all internal links use relative paths and point to existing files.
-- When adding a new recipe, ensure it contains:
+- Confirm every `<img>` tag has a valid `src` path and meaningful `alt` attribute.
+- Ensure all internal links use relative paths and point to existing files.
+- When adding a new recipe, verify it contains:
   - A title
   - A description
   - An ingredients list
@@ -63,7 +70,7 @@ To keep the project robust and easy to maintain:
 
 ## Contributing
 
-When contributing a new recipe:
+To contribute a new recipe:
 1. Add a new HTML page inside the `recipes/` directory.
 2. Follow the existing HTML boilerplate and semantic structure.
 3. Validate the page and verify all links and image paths.
@@ -71,7 +78,7 @@ When contributing a new recipe:
 
 ## Future Improvements
 
-- Apply CSS styling and responsive layout.
+- Apply CSS styling and a responsive layout.
 - Add project screenshots to this README.
 - Improve accessibility with semantic tags, ARIA labels, and color-contrast considerations.
 
