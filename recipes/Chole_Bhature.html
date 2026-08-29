@@ -68,44 +68,100 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function initializeRecipePage() {
-      const recipeImage = document.getElementById('recipe-image');
+      try {
+        const recipeImage = getElementByIdOrNull('recipe-image');
 
-      if (!recipeImage) {
-        console.error('Recipe image element is missing; no image handling applied.');
-        return;
-      }
-
-      function isSafeImageSource(imageSource) {
-        if (typeof imageSource !== 'string') {
-          return false;
+        if (!recipeImage) {
+          logError('Recipe image element is missing; no image handling applied.');
+          return;
         }
 
-        const unsafeSourcePatterns = [
-          /^\s*[a-zA-Z]:\\/,
-          /^file:\/\//i,
-          /^data:/i
-        ];
+        const imageSource = getImageSource(recipeImage);
 
-        return !unsafeSourcePatterns.some(function matchesUnsafePattern(pattern) {
-          return pattern.test(imageSource);
-        });
+        if (!isTrustedImageSource(imageSource)) {
+          logError('Unsafe image source detected; removing source to prevent local file access.');
+          markImageAsUnavailable(recipeImage);
+          return;
+        }
+
+        registerImageErrorHandler(recipeImage);
+      } catch (error) {
+        logError('Failed to initialize recipe image handling: ' + error.message);
+      }
+    });
+
+    function getElementByIdOrNull(elementId) {
+      if (!isNonEmptyString(elementId)) {
+        return null;
+      }
+      return document.getElementById(elementId);
+    }
+
+    function getImageSource(imageElement) {
+      if (!isValidImageElement(imageElement)) {
+        return '';
+      }
+      const source = imageElement.getAttribute('src');
+      return isNonEmptyString(source) ? source.trim() : '';
+    }
+
+    function isValidImageElement(imageElement) {
+      return imageElement !== null &&
+             typeof imageElement === 'object' &&
+             typeof imageElement.getAttribute === 'function';
+    }
+
+    function isNonEmptyString(value) {
+      return typeof value === 'string' && value.length > 0;
+    }
+
+    function isTrustedImageSource(imageSource) {
+      if (!isNonEmptyString(imageSource)) {
+        return true;
       }
 
-      const imageSource = recipeImage.getAttribute('src') || '';
+      const unsafeSourcePatterns = [
+        /^\s*[a-zA-Z]:\\/,
+        /^file:\/\//i,
+        /^data:/i
+      ];
 
-      if (!isSafeImageSource(imageSource)) {
-        console.error('Unsafe image source detected; removing source to prevent local file access.');
-        recipeImage.removeAttribute('src');
-        recipeImage.alt = 'Recipe image unavailable due to an unsafe source.';
+      return !unsafeSourcePatterns.some(function matchesUnsafePattern(pattern) {
+        return pattern.test(imageSource);
+      });
+    }
+
+    function markImageAsUnavailable(imageElement) {
+      if (!isValidImageElement(imageElement) || typeof imageElement.removeAttribute !== 'function') {
+        return;
+      }
+      imageElement.removeAttribute('src');
+      imageElement.alt = 'Recipe image unavailable due to an unsafe source.';
+    }
+
+    function registerImageErrorHandler(imageElement) {
+      if (!isValidImageElement(imageElement) || typeof imageElement.addEventListener !== 'function') {
         return;
       }
 
-      recipeImage.addEventListener('error', function handleImageLoadError() {
-        this.alt = 'Recipe image failed to load.';
-        this.classList.add('image-error');
-        this.removeEventListener('error', handleImageLoadError);
+      imageElement.addEventListener('error', function handleImageError(event) {
+        const targetImage = event.currentTarget;
+
+        if (!targetImage || typeof targetImage.classList === 'undefined') {
+          return;
+        }
+
+        targetImage.alt = 'Recipe image failed to load.';
+        targetImage.classList.add('image-error');
+        targetImage.removeEventListener('error', handleImageError);
       });
-    });
+    }
+
+    function logError(message) {
+      if (typeof console !== 'undefined' && typeof console.error === 'function') {
+        console.error(message);
+      }
+    }
   </script>
 </body>
 </html>
